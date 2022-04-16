@@ -8,7 +8,7 @@
 -- Project Name: Running text on 7seg dispalys
 -- Target Devices: nexys-a7-50t
 -- Tool Versions: 
--- Description: Project is modified for running text on LCD display with HD44780.
+-- Description: Testbench created for test function of circular register.
 -- 
 -- Dependencies: 
 -- 
@@ -17,7 +17,6 @@
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -43,16 +42,17 @@ begin
     uut_circ_register: entity work.circ_register
     port map(
         clk => s_clk,
-        ce => '1', -- for simplier simulation
+        ce => '1', -- for simplier simulation circuit reacts to every clk signal
         load => s_load,
         reset => s_reset,
         i_pattern => s_i_pattern,
         o_pattern => s_o_pattern
     );
 
+    -- clock generator
     p_clk_gen : process
     begin
-        while now < 750 ns loop -- 75 periods of 100MHz clock
+        while now < 5000 ns loop
             s_clk <= '0';
             wait for c_CLK_100MHZ_PERIOD / 2;
             s_clk <= '1';
@@ -61,14 +61,20 @@ begin
         wait;
     end process p_clk_gen;
     
+   -- reset signal generation
    p_reset_gen : process
     begin
         s_reset <= '1';
         wait for 2 ns;
         s_reset <= '0';
+        wait for 800 ns;
+        s_reset <= '1';
+        wait for 10 ns;
+        s_reset <= '0';
         wait;
     end process p_reset_gen;
     
+    -- fill register with data
     p_stimulus : process
     begin
         wait for 2 ns;
@@ -148,9 +154,5 @@ begin
         wait for 10 ns;
         wait;
     end process p_stimulus;
-    
-
-
 
 end testbench;
-
