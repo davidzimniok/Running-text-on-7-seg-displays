@@ -41,6 +41,12 @@ process(clk)
 begin
     if rising_edge(clk) then
         if enable_load = '1' then
+            if last_en = '0' then
+                out_reset <= '1';
+                last_en <= '1';
+            else
+                out_reset <= '0';
+            end if;
             if load = '1' and last_load = '0' then
                 out_load <= '1';
                 last_load <= '1';
@@ -49,8 +55,8 @@ begin
             else
                 out_load <= '0';
             end if;
-            out_reset <= '0';
         else
+            last_en <= '0';
             out_reset <= reset;
             out_load <= '0';
         end if;

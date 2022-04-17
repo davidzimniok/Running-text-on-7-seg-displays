@@ -52,7 +52,7 @@ note: If you don't enable loading data are not stored to the register. This is s
 
 **Loading data with enabling it by hardware switch**
 ![Schematic of top](simulations/top/top_loadwithenable.png)
-note: After enabling data storing data at serial input are loaded to the register. When this switch is in the on position all reset signals are supressed. At the out pattern from register is the first ASCII char and shifting of the register is not interupted. For loading data this is not problem because counter of bit index is not connected with shifting. Before loading data for loading from zero position is recomended reset of circuit. 
+note: After enabling data storing data at serial input are loaded to the register. When this switch is in the on position all reset signals are supressed. At the out pattern from register is the first ASCII char and shifting of the register is not interupted. For loading data this is not problem because counter of bit index is not connected with shifting. Before loading data for loading from zero position is recomended reset of circuit, but this is provided by load_enabler. 
 
 **Reseting the circuit**
 ![Schematic of top](simulations/top/top_reset.png)
