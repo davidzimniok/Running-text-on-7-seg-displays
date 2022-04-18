@@ -4,7 +4,7 @@
 -- 
 -- Create Date: 16.04.2022 23:31:36
 -- Design Name: project
--- Module Name: tb_top - Behavioral
+-- Module Name: tb_data_top - Behavioral
 -- Project Name: Running text on 7seg dispalys
 -- Target Devices: nexys-a7-50t
 -- Tool Versions: 
@@ -21,11 +21,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity tb_top is
+entity tb_data_top is
 --  Port ( );
-end tb_top;
+end tb_data_top;
 
-architecture Behavioral of tb_top is
+architecture Behavioral of tb_data_top is
 
 constant c_CLK_100MHZ_PERIOD : time := 10 ns;
 signal s_clk : STD_LOGIC;
@@ -35,7 +35,7 @@ signal s_en : STD_LOGIC;
 
 begin
 
-    uut_top : entity work.top
+    uut_data_top : entity work.data_top
     port map(
         CLK_100MHZ => s_clk,
         BTNC => s_reset,
