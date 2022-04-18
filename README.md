@@ -36,14 +36,14 @@ This module is responsible for comunication with computer via serial line. For t
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
 **transition table of FSM**
-|**INPUT VARIABLE**|**COMBINATION**|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|**INPUT VARIABLE**|**COMBINATION**||
 |---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 | sig_tx        |   | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  |
 | s_co          |   | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  |
 | clk_count     |   | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
 | bit_index     |   | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
 |---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
-|**ACTUAL STATE**|**NEXT STATE**|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|**ACTUAL STATE**|**NEXT STATE**||
 |---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 | wait_state    | A | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
 | start_bit_rec | B | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
