@@ -35,22 +35,29 @@ Write your text here.
 This module is responsible for comunication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power suply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board. We wanted something more universal, what could work with standard serial port. So we have found circuit MAX232 (see [Hardware description](#hardware)). 
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
-**transition table of FSM**
 
-|**INPUT VARIABLE**|combination|  | | | | | | | | | | | | | | | |
+**transition table for FSM**
+|**INPUT VARIABLE**|    |  | | | | | | | | | | | | | | | |
 |---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
 | sig_tx        |   | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  |
 | s_co          |   | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  |
 | clk_count     |   | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
 | bit_index     |   | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
-|**STATE**| |**NEXT**| | | | | | | | | | | | | | | |
+|**STATE**| |   | | | | | | | | | | | | | | | |
 | wait_state    | A | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
 | start_bit_rec | B | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
 | data_rec      | C | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
 | stop_bit_rec  | D | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
 | wait_for_end  | E | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
 
-
+**output variables and internal signal changes for FSM**
+| state\out var | out_pattern | out_sig | r_on | clk_count  | bit_index   | note                                                                      |
+|---------------|-------------|---------|------|------------|-------------|---------------------------------------------------------------------------|
+| wait_state    | in_reg      | 0       | 1    | 0          | 0           |                                                                           |
+| start_bit_rec | in_reg      | 0       | 0    | ~clk_count | 0           | at transition clk_count is set to 0 and inversion is set only if sig_tx=1 |
+| data_rec      | in_reg      | 0       | 0    | ~clk_count | bit_index+1 | at transition clk_count is set to 0                                       |
+| stop_bit_rec  | in_reg      | 1       | 0    | ~clk_count | 0           |                                                                           |
+| wait_for_end  | in_reg      | 1       | 0    | x          | 0           |                                                                           |
 
 ###Circular register module
 
