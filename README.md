@@ -2,8 +2,8 @@
 
 ### Team members
 
-* Hana DAOV¡, 230238 (responsible for xxx)
-* Tom·ö UCHYTIL, 230337 (responsible for LCD driver)
+* Hana DAOV√Å, 230238 (responsible for xxx)
+* Tom√°≈° UCHYTIL, 230337 (responsible for LCD driver)
 * David ZIMNIOK, 230354 (responsible for comumnication with PC and data register)
 
 ### Table of contents
@@ -36,17 +36,22 @@ This module is responsible for comunication with computer via serial line. For t
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
 **transition table of FSM**
-* | STATE         | input and   internal signals |               |               |              |               |               |               |              |               |               |               |              |               |               |               |              | note                                       |
-|---------------|------------------------------|---------------|---------------|--------------|---------------|---------------|---------------|--------------|---------------|---------------|---------------|--------------|---------------|---------------|---------------|--------------|--------------------------------------------|
-|               | sig_tx=0                     | sig_tx=1      | sig_tx=0      | sig_tx=1     | sig_tx=0      | sig_tx=1      | sig_tx=0      | sig_tx=1     | sig_tx=0      | sig_tx=1      | sig_tx=0      | sig_tx=1     | sig_tx=0      | sig_tx=1      | sig_tx=0      | sig_tx=1     | input signal                               |
-|               | s_co=0                       | s_co=0        | s_co=1        | s_co=1       | s_co=0        | s_co=0        | s_co=1        | s_co=1       | s_co=0        | s_co=0        | s_co=1        | s_co=1       | s_co=0        | s_co=0        | s_co=1        | s_co=1       | internal signal (pulse on half of baurate) |
-|               | clk_count=0                  | clk_count=0   | clk_count=0   | clk_count=0  | clk_count=1   | clk_count=1   | clk_count=1   | clk_count=1  | clk_count=0   | clk_count=0   | clk_count=0   | clk_count=0  | clk_count=1   | clk_count=1   | clk_count=1   | clk_count=1  | internal signal (1bit counter)             |
-|               | bit_index<7                  | bit_index<7   | bit_index<7   | bit_index<7  | bit_index<7   | bit_index<7   | bit_index<7   | bit_index<7  | bit_index=7   | bit_index=7   | bit_index=7   | bit_index=7  | bit_index=7   | bit_index=7   | bit_index=7   | bit_index=7  | counts data                                |
-| wait_state    | start_bit_rec                | wait_state    | start_bit_rec | wait_state   | start_bit_rec | wait_state    | start_bit_rec | wait_state   | start_bit_rec | wait_state    | start_bit_rec | wait_state   | start_bit_rec | wait_state    | start_bit_rec | wait_state   | waiting for start bit                      |
-| start_bit_rec | start_bit_rec                | start_bit_rec | data_rec      | wait_state   | start_bit_rec | start_bit_rec | data_rec      | wait_state   | start_bit_rec | start_bit_rec | data_rec      | wait_state   | start_bit_rec | start_bit_rec | data_rec      | wait_state   | verify start bit                           |
-| data_rec      | data_rec                     | data_rec      | data_rec      | data_rec     | data_rec      | data_rec      | data_rec      | data_rec     | stop_bit_rec  | stop_bit_rec  | stop_bit_rec  | stop_bit_rec | stop_bit_rec  | stop_bit_rec  | stop_bit_rec  | stop_bit_rec | recieving data repeat 8 times (bit index)  |
-| stop_bit_rec  | stop_bit_rec                 | stop_bit_rec  | stop_bit_rec  | stop_bit_rec | stop_bit_rec  | stop_bit_rec  | wait_for_end  | wait_for_end | stop_bit_rec  | stop_bit_rec  | stop_bit_rec  | stop_bit_rec | stop_bit_rec  | stop_bit_rec  | wait_for_end  | wait_for_end | recieve stop bit                           |
-| wait_for_end  | wait_for_end                 | wait_for_end  | wait_state    | wait_state   | wait_for_end  | wait_for_end  | wait_state    | wait_state   | wait_for_end  | wait_for_end  | wait_state    | wait_state   | wait_for_end  | wait_for_end  | wait_state    | wait_state   | wait for half of period of baudrate        |
+|**INPUT VARIABLE**|**COMBINATION**|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| sig_tx        |   | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  | 0  | 1  |
+| s_co          |   | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  |
+| clk_count     |   | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
+| bit_index     |   | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
+|---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|**ACTUAL STATE**|**NEXT STATE**|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+|---------------|---|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
+| wait_state    | A | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
+| start_bit_rec | B | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
+| data_rec      | C | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
+| stop_bit_rec  | D | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
+| wait_for_end  | E | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
+
+
 
 ###Circular register module
 
@@ -94,5 +99,5 @@ Write your text here
 ## References
 
 1. Merrick, R. (2018, December 22). UART, serial port, RS-232 interface. UART in VHDL and Verilog for an FPGA. Retrieved April 18, 2022, from https://www.nandland.com/vhdl/modules/module-uart-serial-port-rs232.html 
-2. Fr˝za, T. (2018). Template for 7-segment display decoder. 7-segment display decoder. Retrieved April 18, 2022, from https://www.edaplayground.com/x/Vdpu 
+2. Fr√Ωza, T. (2018). Template for 7-segment display decoder. 7-segment display decoder. Retrieved April 18, 2022, from https://www.edaplayground.com/x/Vdpu 
 3. Wikimedia Foundation. (2022, February 14). RS-232. Wikipedia. Retrieved April 18, 2022, from https://en.wikipedia.org/wiki/RS-232 
