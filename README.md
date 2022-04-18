@@ -108,6 +108,7 @@ Module used from computer excercises. This module simply counts up rising edges 
 
 **Simulation of clock enable module used in top module (periode is 0,5 s)**
 ![Schematic of top](simulations/clock_enable/function.png)
+note: when reset is in high local counter is set to zero and whole function of circuit is deactivated till to reset will be low
 
 ### Load enable module
 
@@ -117,44 +118,17 @@ Simple sequentional circuit which we can descibe via truth table.
 
 [Source code for load_enable module simulation](tb/tb_load_enable.vhd)
 
-| clk                            | reset | load | last_load | enable_load | last_en | out_reset | out_load |
-|--------------------------------|-------|------|-----------|-------------|---------|-----------|----------|
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 0       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 0       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 0       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 0       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 1       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 1       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 1       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 1       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 0       | 1         | 1        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 0       | 1         | 1        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 0       | 1         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 1       | 0         | 1        |
-| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 1       | 0         | 1        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
-| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
+| clk                             | reset | load | last_load | enable_load | last_en | out_reset | out_load |
+|---------------------------------|-------|------|-----------|-------------|---------|-----------|----------|
+| ![arrow](images/eq_uparrow.png) |   0   |   x  |     x     |      x      |    x    |     0     |     0    |
+| ![arrow](images/eq_uparrow.png) |   1   |   x  |     x     |      x      |    x    |     1     |     0    |
+| ![arrow](images/eq_uparrow.png) |   x   |   1  |     0     |      1      |    0    |     1     |     1    |
+| ![arrow](images/eq_uparrow.png) |   x   |   1  |     0     |      1      |    1    |     0     |     1    |
+| ![arrow](images/eq_uparrow.png) |   x   |   x  |     x     |      1      |    0    |     1     |     0    |
+| ![arrow](images/eq_uparrow.png) |   x   |   x  |     x     |      1      |    1    |     0     |     0    |
 
 **simulation of work**
-![simulation of work](simulations/load_enabler/load_enabler.png)
+![simulation of work](simulations/load_enabler/load_enabler.png) 
 
 <a name="top"></a>
 
