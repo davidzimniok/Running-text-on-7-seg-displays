@@ -44,11 +44,11 @@ Because this communiction is periodical, only transmitted data are different, th
 | clk_count          | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
 | bit_index          | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
 |      **STATE**     |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
-| A=wait_state       | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
-| B=start_bit_rec    | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
-| C=data_rec         | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
-| D=stop_bit_rec     | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
-| E=wait_for_end     | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
+| A = wait_state       | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
+| B = start_bit_rec    | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
+| C = data_rec         | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
+| D = stop_bit_rec     | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
+| E = wait_for_end     | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
 
 **output variables and internal signal changes for FSM**
 | state\out var | out_pattern | out_sig | r_on | clk_count  | bit_index   | note                                                                      |
