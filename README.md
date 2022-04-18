@@ -31,13 +31,14 @@ Write your text here.
 
 ## VHDL modules description and simulations
 
-###UART RX module
+### UART RX module
 
 This module is responsible for comunication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power suply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board. We wanted something more universal, what could work with standard serial port. So we have found circuit MAX232 (see [Hardware description](#hardware)). 
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
 
-[Source code for UART_RX module](src/UART_RX.vhd)
+[Source code for UART_RX module](src/UART_RX.vhd)        
+
 [Source code for UART_RX module simulation](tb/tb_UART_RX.vhd)
 
 **table with states for FSM**
@@ -58,8 +59,8 @@ Because this communiction is periodical, only transmitted data are different, th
 | bit_index          | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
 | **STATE**          |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
 | A                  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
-| B                  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
-| C                  | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
+| B                  | B  | B  | C  | B  | B  | B  | C  | A  | B  | B  | C  | B  | B  | B  | C  | A  |
+| C                  | C  | C  | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | C  | C  | D  | D  |
 | D                  | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
 | E                  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
 
@@ -72,16 +73,16 @@ Because this communiction is periodical, only transmitted data are different, th
 | stop_bit_rec  | in_reg      | 1       | 0    | ~clk_count | 0           |                                                                           |
 | wait_for_end  | in_reg      | 1       | 0    | x          | 0           |                                                                           |
 
-Signal named as out_patter is 8bit output of recieved data. Data in this register are changed continuosly, and their validity are signalized by out_sig signal. Clk_count signal is a one bit counter and at everytransition is set to zero. Bit_index variable is integer in range from 0 to 7 and points to actual position of recieved data.
+Signal named as out_patter is 8bit output of recieved data. Data in this register are changed continuosly, and their validity are signalized by out_sig signal. Clk_count signal is a one bit counter and at everytransition is set to zero. Bit_index variable is integer in range from 0 to 7 and points to actual position of recieved data. R_on signal starts local timer to count - frequency is half of baudrate.
 
 **Transition diagram for FSM**
 ![Transition diagram for FSM](schematics/schematic_UART.png)
 
-###Circular register module
+### Circular register module
+    
+### Clock enable module
 
-###Clock enable module
-
-###Load enable module
+### Load enable module
 
 <a name="top"></a>
 
@@ -94,6 +95,7 @@ Top module was divided to two parts. First part is responsible for data storing 
 This part was created from module of circular register (responsible for storing data), UART_RX module (responsible for comunication with computer via RS232 line) - this module have own clock divider set to speed 115200 bauds, clock_enable module (clock for shifting register defining when rester shifts data to left) and load_enable module (responsible for elimination of unwanted states as reset during loading data). For more information about function of these modules please see [VHDL modules description and simulations](#modules). In this caption you also can find source codes and simulations of each modules.  
 
 [Source code for data_top module (half of final top)](src/data_top.vhd)
+
 [Source code for data_top module simulation](tb/tb_data_top.vhd)
 
 **Connection diagram**
