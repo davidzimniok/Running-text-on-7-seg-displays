@@ -98,6 +98,26 @@ note: this simulation shows what happend if we have continuously logical 0 at in
 
 ### Circular register module
     
+This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit all registers are fill with zeros and register at position 5 is filled with 1's. This is ASCII code of white space. Reseting of module have simillar effect. While loading data to registers we load simulateously to 8 register always to same position. Ater store data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotate register to right. So data from 0 position will be in at position 31 (for 32 bits register).
+
+[Source code for circular register module](src/circ_register.vhd)        
+
+[Source code for circular register module simulation](tb/tb_circ_register.vhd)
+
+**Principial scheme of PISO register (1 bit weight)**
+![PISO register](schematics/schematic_reg.png) 
+
+**Normal function of register**
+![normal function](simulations/circ_reg/circreg_all.png)   
+note: While loading value is chaged from 01hex to 22hex. This is caused by owerflow of bit index counter. So if we load more than 32 bits register starts overwriting oldest data. Reseting of module cause loading whitespace ASCII value to all registers.
+
+**Detail of loading data to the register**
+![detail loading function](simulations/circ_reg/circreg_load.png)   
+note: Loaded data are numbers from 0 to 36. When signal 'load' goes to logical 0 register starts shifting.                 
+
+**Detail of shifting data on the register**
+![detail shifting function](simulations/circ_reg/circreg_1cyc.png)     
+    
 ### Clock enable module
 
 Module used from computer excercises. This module simply counts up rising edges of clock signal, and when we reach number set by generic constant (could be changed from top module), circuit generates one clock long impulse which is used in another circuits for short enabling function for one clock periode. So we don't need any clock divider but we generate short pulses after x clocks periods. 
@@ -118,6 +138,8 @@ Simple sequentional circuit which we can descibe via truth table.
 
 [Source code for load_enable module simulation](tb/tb_load_enable.vhd)
 
+** truth table **
+
 | clk                             | reset | load | last_load | enable_load | last_en | out_reset | out_load |
 |---------------------------------|-------|------|-----------|-------------|---------|-----------|----------|
 | ![arrow](images/eq_uparrow.png) |   0   |   x  |     x     |      x      |    x    |     0     |     0    |
@@ -129,6 +151,7 @@ Simple sequentional circuit which we can descibe via truth table.
 
 **simulation of work**
 ![simulation of work](simulations/load_enabler/load_enabler.png) 
+note: another states are impossible due to output combinations and another circuits combinational logics
 
 <a name="top"></a>
 
