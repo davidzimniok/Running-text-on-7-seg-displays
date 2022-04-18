@@ -35,7 +35,7 @@ Write your text here.
 
 This module is responsible for comunication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power suply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board. We wanted something more universal, what could work with standard serial port. So we have found circuit MAX232 (see [Hardware description](#hardware)). 
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
-Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
+Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine. We used reference number 1 as inspiration and we have implemented clock enable mode insted of counting in every state. This is by us better solution because we have 1 module used more times in one project. 
 
 [Source code for UART_RX module](src/UART_RX.vhd)        
 
@@ -49,6 +49,8 @@ Because this communiction is periodical, only transmitted data are different, th
 | C           | data_rec      | recieving data repeat 8 times (bit index) |
 | D           | stop_bit_rec  | recieve stop bit                          |
 | E           | wait_for_end  | wait for half of period of baudrate       |
+
+We have defined five states. What happens in every state is described in the table. Verification and sampling each data bit is done in half of the period of baud rate.
 
 **transition table for FSM**
 | **INPUT VARIABLE** |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
@@ -77,6 +79,22 @@ Signal named as out_patter is 8bit output of recieved data. Data in this registe
 
 **Transition diagram for FSM**
 ![Transition diagram for FSM](schematics/schematic_UART.png)
+
+**Recieve non valid start bit (is shorter than excepted)**
+![Reset of top module](simulations/UART_RX/uartx_recievenoise.png)
+note: this situation can happend if there is some noise on serial bus or when we set wrong baud rate
+
+**Recieve 1 valid ASCII character with changing states**
+![Reset of top module](simulations/UART_RX/uartrx_recieve1ASCIIchar.png)
+note: this simulation shows exact function of each state
+
+**Recieve 4 valid ASCII characters**
+![Reset of top module](simulations/UART_RX/uartrx_recieve4ASCIIchars.png)
+note: this simulation shows function of recieving string (more than 1 character in one transmission)
+
+**Unconnected cable (logical 0 at input - continuously) and its connection**
+![Reset of top module](simulations/UART_RX/uartrx_unconectedcable.png)
+note: this simulation shows what happend if we have continuously logical 0 at input which means that RS232 cable is unconnected, and what happend if we connect out device to the bus and set logical 1 from transimtter to indicate calm state and ready to comunicate with reciever
 
 ### Circular register module
     
