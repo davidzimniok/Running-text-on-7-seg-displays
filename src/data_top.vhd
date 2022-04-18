@@ -4,7 +4,7 @@
 -- 
 -- Create Date: 14.04.2022 16:50:38
 -- Design Name: project
--- Module Name: top - Behavioral
+-- Module Name: data_top - Behavioral
 -- Project Name: Running text on 7seg dispalys
 -- Target Devices: nexys-a7-50t
 -- Tool Versions: 
@@ -21,15 +21,15 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity top is
+entity data_top is
     Port ( CLK_100MHZ : in STD_LOGIC;
            BTNC : in STD_LOGIC;
            JA : in STD_LOGIC;
            SW : in STD_LOGIC;
            LED : out STD_LOGIC_VECTOR(7 downto 0));
-end top;
+end data_top;
 
-architecture Behavioral of top is
+architecture Behavioral of data_top is
 
 signal shift : STD_LOGIC;                           -- frequency of shifting 
 signal c_load : STD_LOGIC;                          -- command to load data
