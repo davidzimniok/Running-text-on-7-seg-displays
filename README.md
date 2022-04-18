@@ -81,7 +81,7 @@ Signal named as out_patter is 8bit output of recieved data. Data in this registe
 ![Transition diagram for FSM](schematics/schematic_UART.png)
 
 **Recieve non valid start bit (is shorter than excepted)**
-![Reset of top module](simulations/UART_RX/uartx_recievenoise.png)
+![Reset of top module](simulations/UART_RX/uartrx_recievenoise.png)
 note: this situation can happend if there is some noise on serial bus or when we set wrong baud rate
 
 **Recieve 1 valid ASCII character with changing states**
@@ -100,7 +100,61 @@ note: this simulation shows what happend if we have continuously logical 0 at in
     
 ### Clock enable module
 
+Module used from computer excercises. This module simply counts up rising edges of clock signal, and when we reach number set by generic constant (could be changed from top module), circuit generates one clock long impulse which is used in another circuits for short enabling function for one clock periode. So we don't need any clock divider but we generate short pulses after x clocks periods. 
+
+[Source code for clock_enable module](src/clock_enable.vhd)        
+
+[Source code for clock_enable module simulation](tb/tb_clock_enable.vhd)
+
+**Simulation of clock enable module used in top module (periode is 0,5 s)**
+![Schematic of top](simulations/load_enabler/function.png)
+
 ### Load enable module
+
+Simple sequentional circuit which we can descibe via truth table.
+
+[Source code for load_enable module](src/load_enable.vhd)        
+
+[Source code for load_enable module simulation](tb/tb_load_enable.vhd)
+
+| clk                            | reset | load | last_load | enable_load | last_en | out_reset | out_load |
+|--------------------------------|-------|------|-----------|-------------|---------|-----------|----------|
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 0       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 0       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 0       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 0       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 1       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 1       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 1       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 1       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 0       | 1         | 1        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 0       | 1         | 1        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 0       | 1         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 1       | 0         | 1        |
+| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 1       | 0         | 1        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
+| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
+
+**simulation of work**
+[simulation of work](simulations/load_enabler/load_enabler.png)
 
 <a name="top"></a>
 
