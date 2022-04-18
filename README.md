@@ -36,6 +36,15 @@ This module is responsible for comunication with computer via serial line. For t
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communiction is periodical, only transmitted data are different, the best soulution is to implement finite state machine.  
 
+**table with states for FSM**
+| placeholder | name of state | description                               |
+|-------------|---------------|-------------------------------------------|
+| A           | wait_state    | waiting for start bit                     |
+| B           | start_bit_rec | verify start bit                          |
+| C           | data_rec      | recieving data repeat 8 times (bit index) |
+| D           | stop_bit_rec  | recieve stop bit                          |
+| E           | wait_for_end  | wait for half of period of baudrate       |
+
 **transition table for FSM**
 | **INPUT VARIABLE** |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
 |--------------------|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|----|
@@ -43,12 +52,12 @@ Because this communiction is periodical, only transmitted data are different, th
 | s_co               | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  | 0  | 0  | 1  | 1  |
 | clk_count          | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  | 0  | 0  | 0  | 0  | 1  | 1  | 1  | 1  |
 | bit_index          | <7 | <7 | <7 | <7 | <7 | <7 | <7 | <7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 | =7 |
-|      **STATE**     |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
-| A = wait_state       | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
-| B = start_bit_rec    | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
-| C = data_rec         | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
-| D = stop_bit_rec     | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
-| E = wait_for_end     | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
+| **STATE**          |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+| A                  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  | B  | A  |
+| B                  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  | B  | B  | C  | A  |
+| C                  | C  | C  | C  | C  | C  | C  | C  | C  | D  | D  | D  | D  | D  | D  | D  | D  |
+| D                  | D  | D  | D  | D  | D  | D  | E  | E  | D  | D  | D  | D  | D  | D  | E  | E  |
+| E                  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  | E  | E  | A  | A  |
 
 **output variables and internal signal changes for FSM**
 | state\out var | out_pattern | out_sig | r_on | clk_count  | bit_index   | note                                                                      |
