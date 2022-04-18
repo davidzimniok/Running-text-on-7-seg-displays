@@ -107,7 +107,7 @@ Module used from computer excercises. This module simply counts up rising edges 
 [Source code for clock_enable module simulation](tb/tb_clock_enable.vhd)
 
 **Simulation of clock enable module used in top module (periode is 0,5 s)**
-![Schematic of top](simulations/load_enabler/function.png)
+![Schematic of top](simulations/clock_enable/function.png)
 
 ### Load enable module
 
@@ -119,42 +119,42 @@ Simple sequentional circuit which we can descibe via truth table.
 
 | clk                            | reset | load | last_load | enable_load | last_en | out_reset | out_load |
 |--------------------------------|-------|------|-----------|-------------|---------|-----------|----------|
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 0       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 0       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 0       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 0       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 1       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 1       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 1       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 1       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 0       | 1         | 1        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 0       | 1         | 1        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 0       | 1         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 1       | 0         | 1        |
-| [arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 1       | 0         | 1        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
-| [arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 0       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 0       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 0       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 0       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 0           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 0           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 0           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 0           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 0           | 1       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 0           | 1       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 0           | 1       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 0           | 1       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 0       | 1         | 1        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 0       | 1         | 1        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 0       | 1         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 0         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 0    | 1         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 0         | 1           | 1       | 0         | 1        |
+| ![arrow](images/eq_uparrow.png) | 0     | 1    | 1         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 0         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 0    | 1         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 0         | 1           | 1       | 0         | 1        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
+| ![arrow](images/eq_uparrow.png) | 1     | 1    | 1         | 1           | 1       | 0         | 0        |
 
 **simulation of work**
-[simulation of work](simulations/load_enabler/load_enabler.png)
+![simulation of work](simulations/load_enabler/load_enabler.png)
 
 <a name="top"></a>
 
