@@ -199,3 +199,4 @@ Write your text here
 1. Merrick, R. (2018, December 22). UART, serial port, RS-232 interface. UART in VHDL and Verilog for an FPGA. Retrieved April 18, 2022, from [https://www.nandland.com/vhdl/modules/module-uart-serial-port-rs232.html](https://www.nandland.com/vhdl/modules/module-uart-serial-port-rs232.html) 
 2. Frýza, T. (2018). Template for 7-segment display decoder. 7-segment display decoder. Retrieved April 18, 2022, from [https://www.edaplayground.com/x/Vdpu](https://www.edaplayground.com/x/Vdpu) 
 3. Wikimedia Foundation. (2022, February 14). RS-232. Wikipedia. Retrieved April 18, 2022, from [https://en.wikipedia.org/wiki/RS-232](https://en.wikipedia.org/wiki/RS-232)
+4. Letterising the Seven Segment Display – fyr.io. (2018, March 8). Fyr.Io. Retrieved April 19, 2022, from [https://fyr.io/2018/03/08/letterising-the-seven-segment-display](https://fyr.io/2018/03/08/letterising-the-seven-segment-display/)
