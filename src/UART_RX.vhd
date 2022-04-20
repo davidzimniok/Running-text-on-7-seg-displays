@@ -47,10 +47,10 @@ architecture Behavioral of UART_RX is
 
 begin
 
-    -- Clock enabling with frequency 1/2 baud rate. For our aplication we have set baudrate to 115200 so 100MHz/115200/2=434 is g_MAX factor.
+    -- Clock enabling with frequency 1/2 baud rate. For our aplication we have set baudrate to 9600 so 100MHz/9600/2=5208 is g_MAX factor.
     clk_en0 : entity work.clock_enable
     generic map(
-        g_MAX => 434
+        g_MAX => 5208
     )
     port map(
         clk   => clk,

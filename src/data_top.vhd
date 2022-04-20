@@ -22,9 +22,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity data_top is
-    Port ( CLK_100MHZ : in STD_LOGIC;
+    Port ( CLK100MHZ : in STD_LOGIC;
            BTNC : in STD_LOGIC;
-           JA : in STD_LOGIC;
+           UART_TXD_IN : in STD_LOGIC;
+           UART_RXD_OUT : out STD_LOGIC;
            SW : in STD_LOGIC;
            LED : out STD_LOGIC_VECTOR(7 downto 0));
 end data_top;
@@ -45,14 +46,14 @@ begin
         g_MAX => 50000000
     )
     port map(
-        clk   => CLK_100MHZ,
+        clk   => CLK100MHZ,
         reset => p_reset,
         ce_o  => shift
     );
     
     circular_register : entity work.circ_register
     port map(
-        clk => CLK_100MHZ,
+        clk => CLK100MHZ,
         ce => shift,
         load => p_load,
         reset => p_reset,
@@ -69,20 +70,22 @@ begin
         
     uart_reciever : entity work.UART_RX
     port map(
-        clk => CLK_100MHZ,
-        sig_tx => JA,
+        clk => CLK100MHZ,
+        sig_tx => UART_TXD_IN,
         out_pattern => pattern,
         out_sig => c_load
     );
     
     load_enabler : entity work.load_enable
     port map(
-        clk => CLK_100MHZ,
+        clk => CLK100MHZ,
         reset => BTNC,
         enable_load => SW,
         load => c_load,
         out_reset => p_reset,
         out_load => p_load
     );
+    
+    UART_RXD_OUT <= UART_TXD_IN;
 
 end Behavioral;
