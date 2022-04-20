@@ -34,8 +34,8 @@ Write your text here.
 ### UART RX module
 
 This module is responsible for communication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power supply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board.
-The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
-Because this communication is periodical, only transmitted data are different, the best soulution is to implement finite state machine. We used reference number 1 as inspiration and we have implemented clock enable mode insted of counting in every state. This is by us better solution because we have 1 module used more times in one project. 
+The communication is defined by standard RS-232. For our application we set baudrate to 115200. Communication is divided to 3 phases in simplier version. First comes the start bit defined as voltage drop from logical 1 to logical 0. If there is no communication on the bus, logical 1 is on. The next bits come in as 8 bits of data coded to ASCII format from computer. The whole communication is terminated by sending stop bit - change from logical 0 to logical 1.
+Because this communication is periodical and only transmitted data are different, the best soulution is to implement finite state machine. We used reference number 1 as inspiration and we have implemented clock enable mode instead of counting in every state. This is the best solution according to us since we have 1 module used more times in one project. 
 
 [Source code for UART_RX module](src/UART_RX.vhd)        
 
@@ -98,7 +98,7 @@ note: this simulation shows what happend if we have continuously logical 0 at in
 
 ### Circular register module
     
-This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit all registers are fill with zeros and register at position 5 is filled with 1's. This is ASCII code of white space. Reseting of module have simillar effect. While loading data to registers we load simulateously to 8 register always to same position. Ater store data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotate register to right. So data from 0 position will be in at position 31 (for 32 bits register).
+This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit all registers are filled with zeros and register at position 5 is filled with 1's. This is ASCII code of white space. Reseting of module have similar effect. While loading data to registers we load simulateously to 8 register always to same position. Ater store data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotate register to right. So data from 0 position will be in at position 31 (for 32 bits register).
 
 [Source code for circular register module](src/circ_register.vhd)        
 
