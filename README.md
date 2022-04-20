@@ -33,7 +33,7 @@ Write your text here.
 
 ### UART RX module
 
-This module is responsible for communication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power supply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board. We wanted something more universal, what could work with standard serial port. So we have found circuit MAX232 (see [Hardware description](#hardware)). 
+This module is responsible for communication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses UART bridge between standard USB connector which is used as power supply but also as a programmer. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board.
 The comunication is defined by standard RS-232. For our aplication we set baudrate to 115200. Comunication is divided to 3 phases in simplier version. First cames start bit defined as voltage drop from logical 1 to logical 0. When there is no communication on the bus we can measure logical 1. After start bit cames 8 bits of data coded to ASCII format from computer. Communication is terminated by sending stop bit - change from logical 0 to logical 1.
 Because this communication is periodical, only transmitted data are different, the best soulution is to implement finite state machine. We used reference number 1 as inspiration and we have implemented clock enable mode insted of counting in every state. This is by us better solution because we have 1 module used more times in one project. 
 
