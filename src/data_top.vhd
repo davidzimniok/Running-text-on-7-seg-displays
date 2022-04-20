@@ -34,9 +34,11 @@ architecture Behavioral of data_top is
 
 signal shift : STD_LOGIC;                           -- frequency of shifting 
 signal c_load : STD_LOGIC;                          -- command to load data
+signal c_load2 : STD_LOGIC;                         -- command to load data after validation
 signal pattern : STD_LOGIC_VECTOR(7 downto 0);      -- pattern loaded by serial input
 signal p_load : STD_LOGIC;                          -- processed load signal
 signal p_reset : STD_LOGIC;                         -- processed reset signal
+signal p_pattern : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
 
 begin
 
@@ -57,15 +59,8 @@ begin
         ce => shift,
         load => p_load,
         reset => p_reset,
-        i_pattern => pattern,
-        o_pattern(0) => LED(0),
-        o_pattern(1) => LED(1),
-        o_pattern(2) => LED(2),
-        o_pattern(3) => LED(3),
-        o_pattern(4) => LED(4),
-        o_pattern(5) => LED(5),
-        o_pattern(6) => LED(6),
-        o_pattern(7) => LED(7)
+        i_pattern => p_pattern,
+        o_pattern => LED
     );
         
     uart_reciever : entity work.UART_RX
@@ -81,9 +76,18 @@ begin
         clk => CLK100MHZ,
         reset => BTNC,
         enable_load => SW,
-        load => c_load,
+        load => c_load2,
         out_reset => p_reset,
         out_load => p_load
+    );
+    
+    ascii_validate : entity work.ASCII_validator
+    port map(
+        clk => CLK100MHZ,
+        ce => c_load,
+        in_pattern => pattern,
+        out_pattern => p_pattern,
+        load => c_load2
     );
     
     UART_RXD_OUT <= UART_TXD_IN;
