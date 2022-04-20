@@ -20,6 +20,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity data_top is
     Port ( CLK100MHZ : in STD_LOGIC;
@@ -27,7 +28,15 @@ entity data_top is
            UART_TXD_IN : in STD_LOGIC;
            UART_RXD_OUT : out STD_LOGIC;
            SW : in STD_LOGIC;
-           LED : out STD_LOGIC_VECTOR(7 downto 0));
+           LED : out STD_LOGIC_VECTOR(7 downto 0);
+           CA : out STD_LOGIC;
+           CB : out STD_LOGIC;
+           CC : out STD_LOGIC;
+           CD : out STD_LOGIC;
+           CE : out STD_LOGIC;
+           CF : out STD_LOGIC;
+           CG : out STD_LOGIC;
+           AN : out STD_LOGIC_VECTOR (7 downto 0));
 end data_top;
 
 architecture Behavioral of data_top is
@@ -39,6 +48,7 @@ signal pattern : STD_LOGIC_VECTOR(7 downto 0);      -- pattern loaded by serial 
 signal p_load : STD_LOGIC;                          -- processed load signal
 signal p_reset : STD_LOGIC;                         -- processed reset signal
 signal p_pattern : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
+signal out_pattern : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
 
 begin
 
@@ -60,7 +70,7 @@ begin
         load => p_load,
         reset => p_reset,
         i_pattern => p_pattern,
-        o_pattern => LED
+        o_pattern => out_pattern
     );
         
     uart_reciever : entity work.UART_RX
@@ -89,6 +99,29 @@ begin
         out_pattern => p_pattern,
         load => c_load2
     );
+    
+    driver_seg_4 : entity work.driver_7seg_4digits
+      port map(
+          clk        => CLK100MHZ,
+          reset      => BTNC,
+          enable => shift,
+          data_i => character'val(out_pattern),
+
+          -- MAP DATA INPUTS TO ON-BOARD SWITCHES
+
+          
+
+            seg_o(6) => CA,-- MAP DECIMAL POINT AND DISPLAY SEGMENTS
+            seg_o(5) => CB,
+            seg_o(4) => CC,
+            seg_o(3) => CD,
+            seg_o(2) => CE,
+            seg_o(1) => CF,
+            seg_o(0) => CG,
+            
+
+          dig_o => AN
+      );
     
     UART_RXD_OUT <= UART_TXD_IN;
 
