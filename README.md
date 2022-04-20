@@ -2,7 +2,7 @@
 
 ### Team members
 
-* Hana DAOVÁ, 230238 (responsible for xxx)
+* Hana DAOVÁ, 230238 (responsible for technical documentation)
 * Tomáš UCHYTIL, 230337 (responsible for 7-segment display driver)
 * David ZIMNIOK, 230354 (responsible for communication with PC and data register)
 
