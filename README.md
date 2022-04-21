@@ -1,4 +1,4 @@
-# Running text on 7-seg displays (after consultation modified to LCD display)
+# Running text on 7-seg displays
 
 ### Team members
 
@@ -157,7 +157,7 @@ note: another states are impossible due to output combinations and another circu
 
 ## TOP module description and simulations
 
-Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for comunication with LCD driver (Hitachi HD44780 or simillar). 
+Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for comunication with 7segment display.
 
 ### Part of top responsible for data operations
 
