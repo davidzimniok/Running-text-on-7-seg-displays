@@ -159,16 +159,13 @@ note: another states are impossible due to output combinations and another circu
 
 Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for comunication with 7segment display.
 
+[Source code for top module](src/top.vhd)
+
+[Source code for top module simulation](tb/tb_top.vhd)
+
 ### Part of top responsible for data operations
 
 This part was created from module of circular register (responsible for storing data), UART_RX module (responsible for comunication with computer via RS232 line) - this module have own clock divider set to speed 115200 bauds, clock_enable module (clock for shifting register defining when rester shifts data to left) and load_enable module (responsible for elimination of unwanted states as reset during loading data). For more information about function of these modules please see [VHDL modules description and simulations](#modules). In this caption you also can find source codes and simulations of each modules.  
-
-[Source code for data_top module (half of final top)](src/data_top.vhd)
-
-[Source code for data_top module simulation](tb/tb_data_top.vhd)
-
-#### Connection diagram
-![Schematic of top](schematics/schematic_top.png)
 
 #### Loading data without enabling it by hardware switch
 ![Load data without enable](simulations/top/top_loadwithoutenable.png)
