@@ -170,6 +170,8 @@ Module test with clock signal validity of ASCII character and if the character e
 
 Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for comunication with 7segment display.
 
+![Schematic of top](simulations/schematics/schematic_top.png)
+
 [Source code for top module](src/top.vhd)
 
 ### Part of top responsible for data operations
