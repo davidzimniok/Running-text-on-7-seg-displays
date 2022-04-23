@@ -22,7 +22,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity data_top is
+entity top is
     Port ( CLK100MHZ : in STD_LOGIC;
            BTNC : in STD_LOGIC;
            UART_TXD_IN : in STD_LOGIC;
@@ -37,9 +37,9 @@ entity data_top is
            CF : out STD_LOGIC;
            CG : out STD_LOGIC;
            AN : out STD_LOGIC_VECTOR (7 downto 0));
-end data_top;
+end top;
 
-architecture Behavioral of data_top is
+architecture Behavioral of top is
 
 signal shift : STD_LOGIC;                           -- frequency of shifting 
 signal c_load : STD_LOGIC;                          -- command to load data
