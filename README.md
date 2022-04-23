@@ -153,6 +153,17 @@ Simple sequentional circuit which we can descibe via truth table.
 ![simulation of work](simulations/load_enabler/load_enabler.png) 
 note: another states are impossible due to output combinations and another circuits combinational logics
 
+### ASCII validator module
+
+Module test with clock signal validity of ASCII character and if the character exist in our table created for decode binary data to 7 seg display signals. Module is created to identify uppercase letters and to convert lowercase to uppercase. Also passes number and dot, comma, question mark, exclation mark and white space. Another characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
+
+[Source code for ASCII validator module](src/ASCII_validator.vhd)        
+
+[Source code for ASCII validator module simulation](tb/tb_ASCII_validator.vhd)
+
+#### Simulation of work
+![simulation of work](simulations/ASCII_validator/ascii_validator.png) 
+
 <a name="top"></a>
 
 ## TOP module description and simulations
