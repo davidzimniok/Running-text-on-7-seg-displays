@@ -103,7 +103,7 @@ begin
     driver_seg_8 : entity work.driver_7seg_8digits
       port map(
           clk        => CLK100MHZ,
-          reset      => BTNC,
+          reset      => p_reset
           enable => shift,
           data_i => character'val(out_pattern),
 
