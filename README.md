@@ -161,11 +161,11 @@ Top module was divided to two parts. First part is responsible for data storing 
 
 [Source code for top module](src/top.vhd)
 
-[Source code for top module simulation](tb/tb_top.vhd)
-
 ### Part of top responsible for data operations
 
 This part was created from module of circular register (responsible for storing data), UART_RX module (responsible for comunication with computer via RS232 line) - this module have own clock divider set to speed 115200 bauds, clock_enable module (clock for shifting register defining when rester shifts data to left) and load_enable module (responsible for elimination of unwanted states as reset during loading data). For more information about function of these modules please see [VHDL modules description and simulations](#modules). In this caption you also can find source codes and simulations of each modules.  
+
+[Source code for simulations below](tb/tb_top.vhd)
 
 #### Loading data without enabling it by hardware switch
 ![Load data without enable](simulations/top/top_loadwithoutenable.png)
