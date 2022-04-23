@@ -34,37 +34,36 @@ end ASCII_validator;
 
 architecture Behavioral of ASCII_validator is
 
-signal loaded_data : integer;
-
 begin
 
-    validator: process(clk, ce)
+    validator: process(clk)
+    variable loaded_data : integer := 0;
     begin
-        if rising_edge(clk) then
-            if ce = '1' then
-                -- convert ascii binary data to decimal number
-                loaded_data <= to_integer(unsigned(in_pattern));
-                if (loaded_data < 91) and (loaded_data > 64) then
-                    out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
-                    load <= '1';
-                elsif (loaded_data < 123) and (loaded_data > 96) then
-                    loaded_data <= loaded_data - 32;
-                    out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
-                    load <= '1';
-                elsif (loaded_data = 33) or (loaded_data = 63) or (loaded_data = 46) or (loaded_data = 44) or (loaded_data = 32) then
-                    loaded_data <= loaded_data;
-                    out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
-                    load <= '1';
-                elsif (loaded_data < 47) and (loaded_data > 58) then
-                    loaded_data <= loaded_data;
-                    out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
-                    load <= '1';
-                else
-                    load <= '0';
-                end if;
+        if ce = '1' then
+            -- convert ascii binary data to decimal number
+            loaded_data := to_integer(unsigned(in_pattern));
+	    -- check if letter on input is capital letter
+            if (loaded_data < 91) and (loaded_data > 64) then
+                out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
+                load <= '1';
+	    -- check if letter on input is lowercase and then conver to uppercase
+            elsif (loaded_data < 123) and (loaded_data > 96) then
+                loaded_data := loaded_data - 32;
+                out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
+                load <= '1';
+	    -- check if on input is dot, question mark, space, exclamation mark or comma
+            elsif (loaded_data = 33) or (loaded_data = 63) or (loaded_data = 46) or (loaded_data = 44) or (loaded_data = 32) then
+                out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
+                load <= '1';
+	    -- check if on input is number character
+            elsif (loaded_data < 58) and (loaded_data > 47) then
+                out_pattern <= std_logic_vector(to_unsigned(loaded_data,out_pattern'length));
+                load <= '1';
             else
                 load <= '0';
             end if;
+        else
+            load <= '0';
         end if;
     end process validator;
 
