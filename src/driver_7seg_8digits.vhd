@@ -18,26 +18,24 @@ use ieee.numeric_std.all;
 --
 --             +------------------+
 --        -----|> clk             |
---        -----| reset       dp_o |-----
+--        -----| reset            |
 --             |       seg_o(6:0) |--/--
 --        -----| data_i           |  7
 --             |                  |
 --        -----| enable           |
 --             |                  |
---             |        dig_o(3:0)|--/--
+--             |        dig_o(7:0)|--/--
 --             |                  |  8
 --             +------------------+
 --
 -- Inputs:
 --   clk
 --   reset
---   dataX_i(3:0) -- Data values for individual digits
---   dp_i(3:0)    -- Decimal points for individual digits
+--   data_i -- Data values for individual symbols
 --
 -- Outputs:
---   dp_o:        -- Decimal point for specific digit
 --   seg_o(6:0)   -- Cathode values for individual segments
---   dig_o(3:0)   -- Common anode signals to individual digits
+--   dig_o(7:0)   -- Common anode signals to individual digits
 --
 ------------------------------------------------------------
 entity driver_7seg_8digits is
