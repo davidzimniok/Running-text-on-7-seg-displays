@@ -155,7 +155,7 @@ note: another states are impossible due to output combinations and another circu
 
 ### ASCII validator module
 
-Module test with clock signal validity of ASCII character and if the character exist in our table created for decode binary data to 7 seg display signals. Module is created to identify uppercase letters and to convert lowercase to uppercase. Also passes number and dot, comma, question mark, exclation mark and white space. Another characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
+Module test with clock signal validity of ASCII character and if the character exist in our table created for decode binary data to 7 seg display signals. Module is created to identify uppercase letters and to convert lowercase to uppercase. Also passes number and dot, comma, question mark, exclation mark and white space. Other characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
 
 [Source code for ASCII validator module](src/ASCII_validator.vhd)        
 
@@ -163,6 +163,16 @@ Module test with clock signal validity of ASCII character and if the character e
 
 #### Simulation of work
 ![simulation of work](simulations/ASCII_validator/ascii_validator.png) 
+
+
+### Display driver module
+
+When enable signal is present, module takes input value, shifts previous values to left and discards leftmost one. Then input value is converted to 7-seg code. When no value is currently being received, it multiplexes and updates all 8 digits.
+
+[Source code for display driver module](src/driver_7seg_8digits.vhd)
+
+#### Simulation of work
+![simulation of work](simulations/display_driver/display_driver_testbench_result.png)
 
 <a name="top"></a>
 
