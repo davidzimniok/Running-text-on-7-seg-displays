@@ -32,6 +32,7 @@ use ieee.numeric_std.all;
 --   clk
 --   reset
 --   data_i -- Data values for individual symbols
+--   enable -- Indicates input data presence
 --
 -- Outputs:
 --   seg_o(6:0)   -- Cathode values for individual segments
