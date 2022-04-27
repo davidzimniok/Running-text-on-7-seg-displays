@@ -174,6 +174,8 @@ When enable signal is present, module takes input value, shifts previous values 
 #### Simulation of work
 ![simulation of work](simulations/display_driver/display_driver_testbench_result.png)
 
+[Source code for display driver module simulation](tb/tb_display_driver.vhd)
+
 <a name="top"></a>
 
 ## TOP module description and simulations
