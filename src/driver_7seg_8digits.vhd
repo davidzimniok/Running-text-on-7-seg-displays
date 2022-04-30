@@ -18,25 +18,26 @@ use ieee.numeric_std.all;
 --
 --             +------------------+
 --        -----|> clk             |
---        -----| reset            |
+--        -----| reset       dp_o |-----
 --             |       seg_o(6:0) |--/--
 --        -----| data_i           |  7
 --             |                  |
 --        -----| enable           |
 --             |                  |
---             |        dig_o(7:0)|--/--
+--             |        dig_o(3:0)|--/--
 --             |                  |  8
 --             +------------------+
 --
 -- Inputs:
 --   clk
 --   reset
---   data_i -- Data values for individual symbols
---   enable -- Indicates input data presence
+--   dataX_i(3:0) -- Data values for individual digits
+--   dp_i(3:0)    -- Decimal points for individual digits
 --
 -- Outputs:
+--   dp_o:        -- Decimal point for specific digit
 --   seg_o(6:0)   -- Cathode values for individual segments
---   dig_o(7:0)   -- Common anode signals to individual digits
+--   dig_o(3:0)   -- Common anode signals to individual digits
 --
 ------------------------------------------------------------
 entity driver_7seg_8digits is
@@ -44,7 +45,7 @@ entity driver_7seg_8digits is
         clk     : in  std_logic;
         reset   : in  std_logic;
 		enable  : in  std_logic;
-        data_i  : in  character;
+        data_i  : in  std_logic_vector(7 downto 0);
         seg_o   : out std_logic_vector(6 downto 0);
         dig_o   : out std_logic_vector(7 downto 0)
     );
@@ -54,7 +55,7 @@ end entity driver_7seg_8digits;
 -- Architecture declaration for display driver
 ------------------------------------------------------------
 architecture Behavioral of driver_7seg_8digits is
-	type arr_type is array (0 to 7) of character;
+	type arr_type is array (0 to 7) of std_logic_vector(7 downto 0);
 	signal data : arr_type;
 	
     -- Internal clock enable
@@ -62,7 +63,7 @@ architecture Behavioral of driver_7seg_8digits is
     -- Internal 3-bit counter for multiplexing 8 digits
     signal s_cnt : std_logic_vector(2 downto 0);
     -- Internal 4-bit value for 7-segment decoder
-    signal s_char : character;
+    signal s_char : std_logic_vector(7 downto 0);
 
 begin
 
@@ -101,7 +102,7 @@ begin
     -- display decoder
     hex2seg : entity work.hex_7seg
         port map(
-            letter => s_char,
+            letter => to_integer(unsigned(s_char)),
             seg_o => seg_o
         );
 
