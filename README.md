@@ -208,6 +208,9 @@ note: When reset is pressed and load mode is disabled, all registers (memory) is
 ![Whole function of data part of top](simulations/top/top_function.png)
 note: After storing the data to the register data are shifted on the output pattern controlled by ce signal from clock_enable module every 500ms.
 
+### Final version of top
+On real hardware we have noticed, some problem with loading data via serial line. We have tried many options as fliping bit order or remove some modules. Unfortunately the problem is in UART module. Without osciloscope and proper data analysis, what is impossible to do with setted deadline, we ar not able to find the mistake. We could say, that problem will be in timing or in data acquisition in FSM. Because this is not main topic of our project, and proper function was confirmed via simulations in final version we have fill data register with static data. Howewer we need for propper function only serial data stream, so the module could be easily replaced with debugged module from another aplication.
+
 <a name="video"></a>
 
 ## Video
