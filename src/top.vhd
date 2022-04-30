@@ -28,7 +28,6 @@ entity top is
            UART_TXD_IN : in STD_LOGIC;
            UART_RXD_OUT : out STD_LOGIC;
            SW : in STD_LOGIC;
-           LED : out STD_LOGIC_VECTOR(7 downto 0);
            CA : out STD_LOGIC;
            CB : out STD_LOGIC;
            CC : out STD_LOGIC;
@@ -42,13 +41,15 @@ end top;
 architecture Behavioral of top is
 
 signal shift : STD_LOGIC;                           -- frequency of shifting 
+signal shift2 : STD_LOGIC;                           -- frequency of shifting 
+signal shift3 : STD_LOGIC;                           -- frequency of shifting 
 signal c_load : STD_LOGIC;                          -- command to load data
 signal c_load2 : STD_LOGIC;                         -- command to load data after validation
 signal pattern : STD_LOGIC_VECTOR(7 downto 0);      -- pattern loaded by serial input
 signal p_load : STD_LOGIC;                          -- processed load signal
 signal p_reset : STD_LOGIC;                         -- processed reset signal
 signal p_pattern : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
-signal out_pattern : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
+signal out_pattern1 : STD_LOGIC_VECTOR(7 downto 0);    -- processed pattern loaded by serial input
 
 begin
 
@@ -63,6 +64,15 @@ begin
         ce_o  => shift
     );
     
+    shitfout : entity work.d_ff_rst
+    port map(
+        clk   => CLK100MHZ,
+        rst => '0',
+        d  => shift,
+        q => shift2,
+        q_bar => shift3
+    );
+    
     circular_register : entity work.circ_register
     port map(
         clk => CLK100MHZ,
@@ -70,7 +80,7 @@ begin
         load => p_load,
         reset => p_reset,
         i_pattern => p_pattern,
-        o_pattern => out_pattern
+        o_pattern => out_pattern1
     );
         
     uart_reciever : entity work.UART_RX
@@ -103,9 +113,9 @@ begin
     driver_seg_8 : entity work.driver_7seg_8digits
       port map(
           clk        => CLK100MHZ,
-          reset      => p_reset
-          enable => shift,
-          data_i => character'val(out_pattern),
+          reset      => p_reset,
+          enable => shift2,
+          data_i => out_pattern1,
 
           seg_o(6) => CA,-- MAP DECIMAL POINT AND DISPLAY SEGMENTS
           seg_o(5) => CB,
