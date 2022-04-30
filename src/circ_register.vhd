@@ -51,7 +51,15 @@ begin
 process(clk, reset)
     begin
         if reset='1' then                   -- reset all registers to 0s
-            temp0 <= (others => '0');
+            -- temp0 <= "00000000010010100100001001010010";
+            -- temp1 <= "00000000000011011010000001101101";
+            -- temp2 <= "00000001011011011100101101101110";
+            -- temp3 <= "00000000100001111000010000111100";
+            -- temp4 <= "00000001101000000110110100000011";
+            -- temp5 <= "00000000000000000000000000000000";
+            -- temp6 <= "11111111111111111111111111111111";
+            -- temp7 <= "00000000000000000000000000000000";
+	    temp0 <= (others => '0');
             temp1 <= (others => '0');
             temp2 <= (others => '0');
             temp3 <= (others => '0');
@@ -60,6 +68,7 @@ process(clk, reset)
             temp6 <= (others => '0');
             temp7 <= (others => '0');
             s_cnt_local <= (others => '0');
+
         end if;
         if rising_edge(clk) then
             if load='1' then            -- load data to register
