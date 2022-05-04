@@ -145,7 +145,7 @@ This module connects 8 simple PISO registers. Each register is used for one bit 
 
 #### Normal function of register
 ![normal function](simulations/circ_reg/circreg_all.png)   
-note: While loading value is changed from 01hex to 22hex. This is caused by owerflow of bit index counter. So if we load more than 32 characters, register starts overwriting older data. Resetting of module causes loading white space ASCII value to all registers.
+note: While loading, value is changed from 01hex to 22hex. This is caused by owerflow of bit index counter. So if we load more than 32 characters, register starts overwriting older data. Resetting the module causes loading white space ASCII value to all registers.
 
 #### Detail of loading data to the register
 ![detail loading function](simulations/circ_reg/circreg_load.png)   
