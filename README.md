@@ -254,7 +254,7 @@ On real hardware we have noticed some problems with loading data via serial line
 
 ## Video
 
-Write your text here
+Link to our video-presentation of this project: [https://www.youtube.com/watch?v=ChD-Qw4JAwo](https://www.youtube.com/watch?v=ChD-Qw4JAwo)
 
 <a name="references"></a>
 
