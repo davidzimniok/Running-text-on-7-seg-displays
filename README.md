@@ -19,7 +19,7 @@
 
 ## Project objectives
 
-The main objective of this project is creating modules which would be responsible for a running text on a 7-segment display of the Nexys A7 board. In order to achieve this goal we intended to use the UART RX module as a serial communication line between the computer and the display itself. We used the register as a memory in this communication process. Our aim was also to create an [ASCII validator](#objectives) which would "translate" the input data to 8 bits which form our 7-segment characters.
+The main objective of this project is creating modules which would be responsible for a running text on a 7-segment display of the Nexys A7 board. In order to achieve this goal we intended to use the UART RX module as a serial communication line between the computer and the display itself. We used the register as a memory in this communication process. Our aim was also to create an [ASCII validator](#validator) which would "translate" the input data to 8 bits which form our 7-segment characters.
 
 ![Displayed idea of the running text on 7segment](images/7seg.gif)
 
@@ -157,6 +157,8 @@ Simple sequentional circuit which we can descibe via truth table.
 ![simulation of work](simulations/load_enabler/load_enabler.png) 
 note: another states are impossible due to output combinations and another circuits combinational logics
 
+<a name="validator"></a>
+
 ### ASCII validator module
 
 Module test with clock signal validity of ASCII character and if the character exists in our table created for decode binary data to 7-segment display signals. Module is created also to identify uppercase letters and to convert lowercase to uppercase. It can recognize numbers, dot, comma, question mark, exclation mark and white space too. Other characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
@@ -167,7 +169,6 @@ Module test with clock signal validity of ASCII character and if the character e
 
 #### Simulation of work
 ![simulation of work](simulations/ASCII_validator/ascii_validator.png) 
-
 
 ### Display driver module
 
