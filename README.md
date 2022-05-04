@@ -21,7 +21,7 @@
 
 The main objective of this project was creating modules which would be responsible for a running text on a 7-segment display of the Nexys A7 board. In order to achieve this goal we intended to use the UART RX module as a serial communication line between the computer and the display itself. We used the register as a memory in this communication process. Our aim was also to create an [ASCII validator](#validator) which would "translate" the input data to 8 bits which represent our 7-segment characters.
 
-![Displayed idea of the running text on 7segment](images/7seg.gif)
+![Displayed idea of the running text on 7-segment](images/7seg.gif)
 
 <a name="hardware"></a>
 
@@ -29,7 +29,36 @@ The main objective of this project was creating modules which would be responsib
 
 ### Nexys A7 board
 
-The Nexys A7 board is a complete, ready-to-use digital circuit development platform based on the latest Artix-7™ Field Programmable Gate Array (FPGA) from Xilinx®. With its large, high-capacity FPGA, generous external memories, and collection of USB, Ethernet, and other ports, the Nexys A7 can host designs ranging from introductory combinational circuits to powerful embedded processors. Several built-in peripherals, including an accelerometer, temperature sensor, MEMs digital microphone, a speaker amplifier, and several I/O devices allow the Nexys A7 to be used for a wide range of designs without needing any other components.
+The Nexys A7 board uses the latest Artix-7™ Field Programmable Gate Array (FPGA) from Xilinx® company. The circuit contains a lot of ports such as USB or Ethernet, pins for external memories and many LEDs and switches used as simple user Input/Output. It also has several built-in components (a speaker amplifier, accelerometer, temperature sensor etc.) which makes it perfect to use for various designs. 
+
+The board comes in 2 variants:
+* Nexys A7-100T 
+* Nexys A7-50T (which we are using)
+
+The only difference between them is that the Artix-7 FPGA part in Nexys A7-100T is bigger than the one in Nexys A7-50T.
+
+To supply the circuit, we need:
+|             |Table 1.1 Nexys A7 power supplies.                                       |               |                     |
+|-------------|-------------------------------------------------------------------------|---------------|---------------------|
+|Supply	      |Circuits                                                                 |Device         |Current (max/typical)|
+|3.3V	      |FPGA I/O, USB ports, Clocks, RAM I/O, Ethernet, SD slot, Sensors, Flash	|IC17: ADP2118  |3A/0.1 to 1.5A       |
+|1.0V	      |FPGA Core	                                                            | IC22: ADP2118	|3A/ 0.2 to 1.3A      |
+|1.8V	      |DDR2, FPGA Auxiliary and RAM                                            	|IC23: ADP2118	|0.8A/ 0.5A           |
+
+The main power input limitation is set to 5.5VDC which is accordingly to Table 1.1 consecutively modified to needed supplies in the circuit.
+
+![Nexys A7 board](images/nexys-a7-callout.png)
+
+For our purposes, we used:
+* **2**	    Power switch
+* **6.**    FPGA programming done LED
+* **13.**	The middle pushbutton as reset
+* **18.**	The rightmost slide switch as editing text enable
+* **19.**	The rightmost LED as a editing mode on indicator
+* **21.**	Eight digit 7-seg display
+* **25.**	Shared UART/JTAG USB port
+* **27.**	Power-good LED
+
 
 See the [full reference manual here](https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual).
 
