@@ -134,7 +134,7 @@ note: this simulation shows what happens if we have continuously logical 0 at in
 
 ### Circular register module
     
-This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit, all registers are filled with zeros and register at position 5 is filled with 1's. This is ASCII code for white space. Resetting of module has a similar effect. When loading data to register, we load synchronously to all 8 register always to the same position. After this process, the stored data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotates register to right. So data from 0 position will be in at position 31 (for 32 characters register).
+This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit, all registers are filled with zeros and register at position 5 is filled with 1's. This is ASCII code for white space. Resetting the module has a similar effect. When loading data to register, we load synchronously to all 8 register always to the same position. After this process, the stored data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotates register to right. So data from 0 position will be in at position 31 (for 32 characters register).
 
 [Source code for circular register module](src/circ_register.vhd)        
 
