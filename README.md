@@ -38,7 +38,7 @@ The board comes in 2 variants:
 The only difference between them is that the Artix-7 FPGA part in Nexys A7-100T is bigger than the one in Nexys A7-50T.
 
 To supply the circuit, we need:
-|             |Table 1 Nexys A7 power supplies.                                       |               |                     |
+|             |Table 1 Nexys A7 power supplies.                                         |               |                     |
 |-------------|-------------------------------------------------------------------------|---------------|---------------------|
 |Supply	      |Circuits                                                                 |Device         |Current (max/typical)|
 |3.3V	      |FPGA I/O, USB ports, Clocks, RAM I/O, Ethernet, SD slot, Sensors, Flash	|IC17: ADP2118  |3A/0.1 to 1.5A       |
@@ -222,7 +222,7 @@ Top module was divided to two parts. First part is responsible for data storing 
 
 [Source code for top module](src/top.vhd)
 
-[Constrain file](src/nexys-a7-50t.xdc)
+[Constraints file](src/nexys-a7-50t.xdc)
 
 ### Part of top responsible for data operations
 
