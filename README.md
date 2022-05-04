@@ -50,8 +50,8 @@ Because this communication is periodical and only transmitted data are different
 |-------------|---------------|-------------------------------------------|
 | A           | wait_state    | waiting for start bit                     |
 | B           | start_bit_rec | verify start bit                          |
-| C           | data_rec      | recieving data repeat 8 times (bit index) |
-| D           | stop_bit_rec  | recieve stop bit                          |
+| C           | data_rec      | receiving data repeat 8 times (bit index) |
+| D           | stop_bit_rec  | receive stop bit                          |
 | E           | wait_for_end  | wait for half of period of baudrate       |
 
 We have defined five states. What happens in every state is described in the table. Verification and sampling each data bit is done in half of the period of baud rate.
@@ -79,14 +79,14 @@ We have defined five states. What happens in every state is described in the tab
 | stop_bit_rec  | in_reg      | 1       | 0    | ~clk_count | 0           |                                                                           |
 | wait_for_end  | in_reg      | 1       | 0    | x          | 0           |                                                                           |
 
-Signal named as out_patter is 8bit output of recieved data. Data in this register are changed continuosly, and their validity are signalized by out_sig signal. Clk_count signal is a one bit counter and at everytransition is set to zero. Bit_index variable is integer in range from 0 to 7 and points to actual position of recieved data. R_on signal starts local timer to count - frequency is half of baudrate.
+Signal named as out_pattern is 8bit output of received data. Data in this register are changed continuosly, and their validity are signalized by out_sig signal. Clk_count signal is a one bit counter and at every transition is set to zero. Bit_index variable is an integer in range from 0 to 7 and points to actual position of received data. R_on signal starts local timer to count - frequency is half of baudrate.
 
 #### Transition diagram for FSM
 ![Transition diagram for FSM](schematics/schematic_UART.png)
 
 #### Recieve non valid start bit (is shorter than excepted)
 ![Reset of top module](simulations/UART_RX/uartrx_recievenoise.png)
-note: this situation can happend if there is some noise on serial bus or when we set wrong baud rate
+note: this situation can happen if there is some noise on serial bus or when we set wrong baud rate
 
 #### Recieve 1 valid ASCII character with changing states
 ![Reset of top module](simulations/UART_RX/uartrx_recieve1ASCIIchar.png)
@@ -94,15 +94,15 @@ note: this simulation shows exact function of each state
 
 #### Recieve 4 valid ASCII characters
 ![Reset of top module](simulations/UART_RX/uartrx_recieve4ASCIIchars.png)
-note: this simulation shows function of recieving string (more than 1 character in one transmission)
+note: this simulation shows function of receiving string (more than 1 character in one transmission)
 
 #### Unconnected cable (logical 0 at input - continuously) and its connection
 ![Reset of top module](simulations/UART_RX/uartrx_unconectedcable.png)
-note: this simulation shows what happend if we have continuously logical 0 at input which means that RS232 cable is unconnected, and what happend if we connect out device to the bus and set logical 1 from transimtter to indicate calm state and ready to comunicate with reciever
+note: this simulation shows what happens if we have continuously logical 0 at input which means that RS232 cable is unconnected, and what happens if we connect out device to the bus and set logical 1 from transimtter to indicate calm state and ready to communicate with receiver
 
 ### Circular register module
     
-This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit all registers are filled with zeros and register at position 5 is filled with 1's. This is ASCII code of white space. Reseting of module have similar effect. While loading data to registers we load simulateously to 8 register always to same position. Ater store data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotate register to right. So data from 0 position will be in at position 31 (for 32 bits register).
+This module connects 8 simple PISO registers. Each register is used for one bit weight. When we initialize this circuit all registers are filled with zeros and register at position 5 is filled with 1's. This is ASCII code of white space. Reseting of module has a similar effect. While loading data to registers we load simulateously to 8 register always to same position. Ater store data position index is incremented. For rotating register we use VHDL command 'ror'. This command rotates register to right. So data from 0 position will be in at position 31 (for 32 characters register).
 
 [Source code for circular register module](src/circ_register.vhd)        
 
@@ -113,7 +113,7 @@ This module connects 8 simple PISO registers. Each register is used for one bit 
 
 #### Normal function of register
 ![normal function](simulations/circ_reg/circreg_all.png)   
-note: While loading value is chaged from 01hex to 22hex. This is caused by owerflow of bit index counter. So if we load more than 32 bits register starts overwriting oldest data. Reseting of module cause loading whitespace ASCII value to all registers.
+note: While loading value is changed from 01hex to 22hex. This is caused by owerflow of bit index counter. So if we load more than 32 characters, register starts overwriting older data. Resetting of module causes loading white space ASCII value to all registers.
 
 #### Detail of loading data to the register
 ![detail loading function](simulations/circ_reg/circreg_load.png)   
@@ -132,7 +132,7 @@ Module used from computer excercises. This module simply counts up rising edges 
 
 #### Simulation of clock enable module used in top module (periode is 0,5s)
 ![Schematic of top](simulations/clock_enable/function.png)
-note: when reset is in high local counter is set to zero and whole function of circuit is deactivated till to reset will be low
+note: when reset is in high local, counter is set to zero and whole function of circuit is deactivated till reset reaches low value
 
 ### Load enable module
 
@@ -159,7 +159,7 @@ note: another states are impossible due to output combinations and another circu
 
 ### ASCII validator module
 
-Module test with clock signal validity of ASCII character and if the character exist in our table created for decode binary data to 7 seg display signals. Module is created to identify uppercase letters and to convert lowercase to uppercase. Also passes number and dot, comma, question mark, exclation mark and white space. Other characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
+Module test with clock signal validity of ASCII character and if the character exists in our table created for decode binary data to 7-segment display signals. Module is created also to identify uppercase letters and to convert lowercase to uppercase. It can recognize numbers, dot, comma, question mark, exclation mark and white space too. Other characters are filtered out. The validity is shown by load signal at output. If bit array is valid signl will go to logic one and copy load signal from UART_RX. If not signal will be at 0. 
 
 [Source code for ASCII validator module](src/ASCII_validator.vhd)        
 
@@ -184,7 +184,7 @@ When enable signal is present, module takes input value, shifts previous values 
 
 ## TOP module description and simulations
 
-Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for comunication with 7segment display.
+Top module was divided to two parts. First part is responsible for data storing to register from serial input and for shifting register operations. At the output of this module are 8 bits representing ASCII character. Second part is responsible for communication with 7-segment display.
 
 ![Schematic of top](schematics/schematic_top.png)
 
@@ -194,28 +194,28 @@ Top module was divided to two parts. First part is responsible for data storing 
 
 ### Part of top responsible for data operations
 
-This part was created from module of circular register (responsible for storing data), UART_RX module (responsible for comunication with computer via RS232 line) - this module have own clock divider set to speed 115200 bauds, clock_enable module (clock for shifting register defining when rester shifts data to left) and load_enable module (responsible for elimination of unwanted states as reset during loading data). For more information about function of these modules please see [VHDL modules description and simulations](#modules). In this caption you also can find source codes and simulations of each modules.  
+This part was created from module of circular register (responsible for storing data), UART_RX module (responsible for communication with computer via RS232 line) - this module has own clock divider set to speed 115200 bauds, clock_enable module (clock for shifting register defining when register shifts data to left) and load_enable module (responsible for elimination of unwanted states as reset during loading data). For more information about function of these modules please see [VHDL modules description and simulations](#modules). In this caption you also can find source codes and simulations of each modules.  
 
 [Source code for simulations below](tb/tb_data_top.vhd)
 
 #### Loading data without enabling it by hardware switch
 ![Load data without enable](simulations/top/top_loadwithoutenable.png)
-note: If you don't enable loading data are not stored to the register. This is secured by load_enable module. In this mode reset is passed to the reset inputs of each modules. 
+note: If you don't enable the loading, data are not stored to the register. This is secured by load_enable module. In this mode reset is passed to the reset inputs of each modules. 
 
 #### Loading data with enabling it by hardware switch
 ![Load dat with enable](simulations/top/top_loadwithenable.png)
-note: After enabling data storing data at serial input are loaded to the register. When this switch is in the on position all reset signals are supressed. At the out pattern from register is the first ASCII char and shifting of the register is not interupted. For loading data this is not problem because counter of bit index is not connected with shifting. Before loading data for loading from zero position is recomended reset of circuit, but this is provided by load_enabler. 
+note: After enabling data storing data at serial input are loaded to the register. When this switch is in the on position all reset signals are supressed. At the out pattern from register is the first ASCII char and shifting of the register is not interrupted. For loading data this is not problem because counter of bit index is not connected with shifting. Before loading data for loading from zero position is recommended reset of circuit, but this is provided by load_enabler. 
 
 #### Reseting the circuit
 ![Reset of top module](simulations/top/top_reset.png)
-note: When reset is pressed and load mode is disabled, all registers (memory) is set to the ASCII char of white space. 
+note: When reset is pressed and load mode is disabled, all registers (memory) are set to the ASCII char of white space. 
 
 #### Complete function of the circuit
 ![Whole function of data part of top](simulations/top/top_function.png)
 note: After storing the data to the register data are shifted on the output pattern controlled by ce signal from clock_enable module every 500ms.
 
 ### Final version of top
-On real hardware we have noticed, some problem with loading data via serial line. We have tried many options as fliping bit order or remove some modules. Unfortunately the problem is in UART module. Without osciloscope and proper data analysis, what is impossible to do with setted deadline, we ar not able to find the mistake. We could say, that problem will be in timing or in data acquisition in FSM. Because this is not main topic of our project, and proper function was confirmed via simulations in final version we have fill data register with static data. Howewer we need for propper function only serial data stream, so the module could be easily replaced with debugged module from another aplication.
+On real hardware we have noticed some problems with loading data via serial line. We have tried many options as flipping bit order or remove some modules. Unfortunately the problem is in UART module. Since we were not able to find the mistake without osciloscope and proper data analysis, it was impossible for is to fix it all till the deadline. We could say, that the problem may be in timing or in data acquisition in FSM. Because this is not main topic of our project, and proper function was confirmed via simulations in final version, we filled data register with static data. Howewer for propper function we need only serial data stream, so the module could be easily replaced with debugged module from another application.
 
 <a name="video"></a>
 
