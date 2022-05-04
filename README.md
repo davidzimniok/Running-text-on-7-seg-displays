@@ -29,6 +29,8 @@ The main objective of this project was creating modules which would be responsib
 
 ### Nexys A7 board
 
+The Nexys A7 board is a complete, ready-to-use digital circuit development platform based on the latest Artix-7™ Field Programmable Gate Array (FPGA) from Xilinx®. With its large, high-capacity FPGA, generous external memories, and collection of USB, Ethernet, and other ports, the Nexys A7 can host designs ranging from introductory combinational circuits to powerful embedded processors. Several built-in peripherals, including an accelerometer, temperature sensor, MEMs digital microphone, a speaker amplifier, and several I/O devices allow the Nexys A7 to be used for a wide range of designs without needing any other components.
+
 See the [full reference manual here](https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual).
 
 <a name="modules"></a>
@@ -232,3 +234,4 @@ Write your text here
 2. Frýza, T. (2018). Template for 7-segment display decoder. 7-segment display decoder. Retrieved April 18, 2022, from [https://www.edaplayground.com/x/Vdpu](https://www.edaplayground.com/x/Vdpu) 
 3. Wikimedia Foundation. (2022, February 14). RS-232. Wikipedia. Retrieved April 18, 2022, from [https://en.wikipedia.org/wiki/RS-232](https://en.wikipedia.org/wiki/RS-232)
 4. Letterising the Seven Segment Display – fyr.io. (2018, March 8). Fyr.Io. Retrieved April 19, 2022, from [https://fyr.io/2018/03/08/letterising-the-seven-segment-display](https://fyr.io/2018/03/08/letterising-the-seven-segment-display/)
+5. Nexys A7™ FPGA Board Reference Manual - DIGILENT (2019, July 10). DIGILENT refference. Retrieved May 4, 2022, from [https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual](https://digilent.com/reference/programmable-logic/nexys-a7/reference-manual) 
