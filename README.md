@@ -84,15 +84,15 @@ Signal named as out_pattern is 8bit output of received data. Data in this regist
 #### Transition diagram for FSM
 ![Transition diagram for FSM](schematics/schematic_UART.png)
 
-#### Recieve non valid start bit (is shorter than excepted)
+#### Receiving a non valid start bit (is shorter than excepted)
 ![Reset of top module](simulations/UART_RX/uartrx_recievenoise.png)
 note: this situation can happen if there is some noise on serial bus or when we set wrong baud rate
 
-#### Recieve 1 valid ASCII character with changing states
+#### Receiving 1 valid ASCII character with changing states
 ![Reset of top module](simulations/UART_RX/uartrx_recieve1ASCIIchar.png)
 note: this simulation shows exact function of each state
 
-#### Recieve 4 valid ASCII characters
+#### Receiving 4 valid ASCII characters
 ![Reset of top module](simulations/UART_RX/uartrx_recieve4ASCIIchars.png)
 note: this simulation shows function of receiving string (more than 1 character in one transmission)
 
