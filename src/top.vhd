@@ -28,6 +28,7 @@ entity top is
            UART_TXD_IN : in STD_LOGIC;
            UART_RXD_OUT : out STD_LOGIC;
            SW : in STD_LOGIC;
+           LED : out STD_LOGIC;
            CA : out STD_LOGIC;
            CB : out STD_LOGIC;
            CC : out STD_LOGIC;
@@ -128,5 +129,6 @@ begin
       );
     
     UART_RXD_OUT <= UART_TXD_IN;
+    LED <= SW;
 
 end Behavioral;
