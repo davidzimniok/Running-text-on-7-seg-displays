@@ -69,7 +69,7 @@ See the [full reference manual here](https://reference.digilentinc.com/reference
 
 ### UART RX module
 
-This module is responsible for communication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses a bridge between standard USB connector which is used as power supply but also as a programmer and the UART chip. This option needs installed special driver at computer to translate UART packages to readable format for USB bridge on board.
+This module is responsible for communication with computer via serial line. For this purposes we can use implemented UART module in FPGA board. This option uses a bridge between standard USB connector which is used as power supply but also as a programmer and the UART chip. This option needs special driver installed at computer to translate UART packages to readable format for USB bridge on board.
 The communication is defined by standard RS-232. For our application we set baudrate to 9600. Communication is divided to 3 phases in simplier version. First comes the start bit defined as voltage drop from logical 1 to logical 0. If there is no communication on the bus, logical 1 is on. The next bits come in as 8 bits of data coded to ASCII format from computer. The whole communication is terminated by sending stop bit - change from logical 0 to logical 1.
 We used reference number 1 as inspiration and we have implemented clock enable mode instead of counting in every state. This is the best solution according to us since we have 1 module used more times in one project. 
 
