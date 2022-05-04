@@ -26,7 +26,9 @@ The main objective of this project is creating modules which would be responsibl
 
 ## Hardware description
 
-See the [full manual here](https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual).
+### Nexys A7 board
+
+See the [full reference manual here](https://reference.digilentinc.com/reference/programmable-logic/nexys-a7/reference-manual).
 
 <a name="modules"></a>
 
