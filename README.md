@@ -2,7 +2,7 @@
 
 ### Team members
 
-* Hana DAOVÁ, 230238 (responsible for technical documentation)
+* Hana DAOVÁ, 230238 (responsible for technical documentation and video)
 * Tomáš UCHYTIL, 230337 (responsible for 7-segment display driver)
 * David ZIMNIOK, 230354 (responsible for communication with PC and data register)
 
@@ -19,7 +19,8 @@
 
 ## Project objectives
 
-Write your text here.
+The main objective of this project is creating modules which would be responsible for a running text on a 7-segment display of the Nexys A7 board. In order to achieve this goal we intended to use the UART RX module as a serial communication line between the computer and the display itself. We used the register as a memory in this communication process.
+![Displayed idea of the running text on 7segment](images/7seg.gif)
 
 <a name="hardware"></a>
 
